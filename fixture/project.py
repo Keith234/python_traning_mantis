@@ -1,4 +1,5 @@
 from modal.project import Project
+import time
 
 
 class ProjectHelper:
@@ -28,6 +29,7 @@ class ProjectHelper:
         wd.find_element_by_css_selector('input[value="Create New Project"]').click()
         self.fill_project_form(project)
         wd.find_element_by_css_selector("input[value='Add Project']").click()
+        time.sleep(5)
 
     project_cache = None
 
