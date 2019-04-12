@@ -1,9 +1,8 @@
 class Project:
 
-    def __init__(self, project_name, description=None):
-        self.project_name = project_name
+    def __init__(self, name, description=None):
+        self.name = name
         self.description = description
-        self.id = id
 
     def __repr__(self):
-        return "%s, %s" % (self.project_name, self.description)
+        return "%s, %s" % (self.name, self.description)

@@ -20,7 +20,7 @@ class ProjectHelper:
 
     def fill_project_form(self, project):
         wd = self.app.wd
-        self.chenge_project_field_value("name", project.project_name)
+        self.chenge_project_field_value("name", project.name)
         self.chenge_project_field_value("description", project.description)
 
     def create(self, project):
@@ -31,21 +31,25 @@ class ProjectHelper:
         wd.find_element_by_css_selector("input[value='Add Project']").click()
         time.sleep(5)
 
-    project_cache = None
+    def delete_project(self, name):
+        wd = self.app.wd
+        self.open_project_page()
+        wd.find_element_by_xpath("//a[contains(text(), '%s')]" % name).click()
+        wd.find_element_by_css_selector('input[value="Delete Project"]').click()
+        wd.find_element_by_css_selector('input[value="Delete Project"]').click()
 
     def get_project_list(self):
-        if self.project_cache is None:
-            wd = self.app.wd
-            self.open_project_page()
-            self.project_cache = []
-            for element in wd.find_elements_by_xpath('//table[@class="width100"]//tr[@class="row-1"]'):
-                cells = element.find_elements_by_tag_name("td")
-                name = cells[0].text
-                description = cells[4].text
-                self.project_cache.append(Project(project_name=name, description=description))
-            for element in wd.find_elements_by_xpath('//table[@class="width100"]//tr[@class="row-2"]'):
-                cells = element.find_elements_by_tag_name("td")
-                name = cells[0].text
-                description = cells[4].text
-                self.project_cache.append(Project(project_name=name, description=description))
-        return list(self.project_cache)
+        wd = self.app.wd
+        self.open_project_page()
+        project_list = []
+        for element in wd.find_elements_by_xpath('//table[@class="width100"]//tr[@class="row-1"]'):
+            cells = element.find_elements_by_tag_name("td")
+            name = cells[0].text
+            description = cells[4].text
+            project_list.append(Project(name=name, description=description))
+        for element in wd.find_elements_by_xpath('//table[@class="width100"]//tr[@class="row-2"]'):
+            cells = element.find_elements_by_tag_name("td")
+            name = cells[0].text
+            description = cells[4].text
+            project_list.append(Project(name=name, description=description))
+        return project_list
