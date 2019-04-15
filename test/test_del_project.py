@@ -12,4 +12,4 @@ def test_del_project(app):
     app.project.delete_project(deleted_project.name)
     new_projects = app.project.get_project_list()
     old_projects.remove(deleted_project)
-    assert len(old_projects) == len(new_projects)
+    assert sorted(old_projects, key=Project.id_or_max) == sorted(new_projects, key=Project.id_or_max)

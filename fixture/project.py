@@ -46,10 +46,12 @@ class ProjectHelper:
             cells = element.find_elements_by_tag_name("td")
             name = cells[0].text
             description = cells[4].text
-            project_list.append(Project(name=name, description=description))
+            id = (element.find_element_by_css_selector('a').get_attribute('href')).split('=')[1]
+            project_list.append(Project(id=id, name=name, description=description))
         for element in wd.find_elements_by_xpath('//table[@class="width100"]//tr[@class="row-2"]'):
             cells = element.find_elements_by_tag_name("td")
             name = cells[0].text
             description = cells[4].text
-            project_list.append(Project(name=name, description=description))
+            id = (element.find_element_by_css_selector('a').get_attribute('href')).split('=')[1]
+            project_list.append(Project(id=id, name=name, description=description))
         return project_list
