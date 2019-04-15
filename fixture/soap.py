@@ -25,7 +25,6 @@ class SoapHelper:
             id = i.id
             name = i.name
             description = i.description
-            tmp_list = Project(id=id, name=name, description=description)
-            list.append(tmp_list)
+            project_list = Project(id=id, name=name, description=description)
+            list.append(project_list)
         return list
-
